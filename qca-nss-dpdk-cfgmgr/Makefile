@@ -1,7 +1,7 @@
 include $(TOPDIR)/rules.mk
 include $(INCLUDE_DIR)/kernel.mk
 
-PKG_NAME:=cfgmgr
+PKG_NAME:=qca-nss-dpdk-cfgmgr
 PKG_VERSION:=1.0
 PKG_RELEASE:=$(AUTORELEASE)
 
@@ -15,7 +15,7 @@ define KernelPackage/$(PKG_NAME)
   CATEGORY:=Kernel modules
   SUBMENU:=Network Devices
   TITLE:=Kernel Module for DPDK Router Configuration Manager
-  FILES:=$(PKG_BUILD_DIR)/cm-knl.ko
+  FILES:=$(PKG_BUILD_DIR)/qca-nss-dpdk-cfgmgr.ko
 endef
 
 define Build/Prepare
@@ -35,12 +35,13 @@ define Build/Compile
 endef
 
 define KernelPackage/$(PKG_NAME)/install
-	$(CP) $(PKG_BUILD_DIR)/cm-knl.ko $(TARGET_DIR)/$(MODULES_SUBDIR)
+	$(CP) $(PKG_BUILD_DIR)/qca-nss-dpdk-cfgmgr.ko $(TARGET_DIR)/$(MODULES_SUBDIR)
 endef
 
-define KernelPackage/$(PKG_NAME)/description
-  cfgmgr kernel netlink module (cm-knl.ko) if for processing user requests and send post routing infomration
-  to PP client applicatoin in user space to add/delete a routing entry.
+define KernelPackage/$(PKG_NAME)/Description
+	Config Manager kernel netlink module (qca-nss-dpdk-cfgmgr.ko) if for processing
+	user requests and send post routing infomration to PP client application in user space
+	to add/delete a routing entry.
 endef
 
 $(eval $(call KernelPackage,$(PKG_NAME)))
