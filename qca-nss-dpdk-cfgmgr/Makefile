@@ -15,14 +15,26 @@ define KernelPackage/$(PKG_NAME)
   CATEGORY:=Kernel modules
   SUBMENU:=Network Devices
   TITLE:=Kernel Module for DPDK Router Configuration Manager
-  FILES:=$(PKG_BUILD_DIR)/qca-nss-dpdk-cfgmgr.ko
+  FILES:=$(PKG_BUILD_DIR)/src/qca-nss-dpdk-cfgmgr.ko
+  AUTOLOAD:=$(call AutoLoad,31,qca-nss-dpdk-cfgmgr)
 endef
 
-define Build/Prepare
-	mkdir -p $(PKG_BUILD_DIR)
-	$(CP) $(PKG_SRC_DIR)/Makefile $(PKG_BUILD_DIR)
-	$(CP) $(PKG_SRC_DIR)/src/* $(PKG_BUILD_DIR)
+define Build/InstallDev/qca-nss-dpdk-cfgmgr
+	$(INSTALL_DIR) $(1)/usr/include/qca-nss-dpdk-cfgmgr
+	$(CP) $(PKG_BUILD_DIR)/exports/* $(1)/usr/include/qca-nss-dpdk-cfgmgr/
 endef
+
+define Build/InstallDev
+	$(call Build/InstallDev/qca-nss-dpdk-cfgmgr,$(1))
+endef
+
+# define Build/Prepare
+# 	mkdir -p $(PKG_BUILD_DIR)
+# 	mkdir -p $(PKG_BUILD_DIR)/exports/
+# 	$(CP) $(PKG_SRC_DIR)/Makefile $(PKG_BUILD_DIR)
+# 	$(CP) $(PKG_SRC_DIR)/src/* $(PKG_BUILD_DIR)
+# 	$(CP) $(PKG_SRC_DIR)/exports/* $(PKG_BUILD_DIR)/exports/
+# endef
 
 define Build/Compile
 	$(MAKE) -C "$(LINUX_DIR)" $(strip $(MAKE_OPTS)) \
@@ -34,9 +46,9 @@ define Build/Compile
 		modules
 endef
 
-define KernelPackage/$(PKG_NAME)/install
-	$(CP) $(PKG_BUILD_DIR)/qca-nss-dpdk-cfgmgr.ko $(TARGET_DIR)/$(MODULES_SUBDIR)
-endef
+# define KernelPackage/$(PKG_NAME)/install
+# 	$(CP) $(PKG_BUILD_DIR)/src/qca-nss-dpdk-cfgmgr.ko $(TARGET_DIR)/$(MODULES_SUBDIR)
+# endef
 
 define KernelPackage/$(PKG_NAME)/Description
 	Config Manager kernel netlink module (qca-nss-dpdk-cfgmgr.ko) if for processing
