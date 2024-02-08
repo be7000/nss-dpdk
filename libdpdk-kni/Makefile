@@ -30,8 +30,6 @@ define Package/libdpdk-kni
   URL:=https://www.dpdk.org
   TARGET_LDFLAGS+=-lpcap
   TARGET_CFLAGS+=-g
-  FILES:=$(PKG_BUILD_DIR)/openwrt-build/kernel/linux/kni/rte_kni.ko
-  AUTOLOAD:=$(call AutoLoad,31,libdpdk-kni)
 endef
 
 define Package/libdpdk-kni/description
