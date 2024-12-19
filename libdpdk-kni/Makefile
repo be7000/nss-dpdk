@@ -14,11 +14,10 @@ PKG_BUILD_DIR:=$(BUILD_DIR)/dpdk-stable-$(PKG_VERSION)
 PATCH_DIR:=patches/
 
 PKG_INSTALL:=1
-PKG_BUILD_DEPENDS:=meson/host
 PKG_BUILD_PARALLEL:=1
 
 include $(INCLUDE_DIR)/package.mk
-include ../../packages/devel/meson/meson.mk
+include $(INCLUDE_DIR)/meson.mk
 
 MESON_ARGS+= -Denable_docs=false  -Denable_drivers=kni -Denable_kmods=true -Dkernel_dir=$(LINUX_DIR) -Ddisable_drivers=event/*
 
